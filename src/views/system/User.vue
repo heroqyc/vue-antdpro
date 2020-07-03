@@ -33,19 +33,29 @@
         </a-form-item>
 
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="用户名" hasFeedback>
-          <a-input placeholder="用户名" v-decorator="['username',{rules:[{ required: true, message: '请输入用户名!' }]}]" />
+          <a-input
+            placeholder="用户名"
+            v-decorator="['username', { rules: [{ required: true, message: '请输入用户名!' }] }]"
+          />
         </a-form-item>
 
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="密码" hasFeedback>
-          <a-input placeholder="请输入密码" v-decorator="['password',{rules:[{ required: true, message: '请输入密码!' },{ required: true, min: 5, message: '最小长度5' },{ required: true, max: 11, message: '最大长度11' }]}]" />
+          <a-input
+            placeholder="请输入密码"
+            v-decorator="[
+              'password',
+              {
+                rules: [
+                  { required: true, message: '请输入密码!' },
+                  { required: true, min: 5, message: '最小长度5' },
+                  { required: true, max: 11, message: '最大长度11' }
+                ]
+              }
+            ]"
+          />
         </a-form-item>
 
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="角色名称"
-          hasFeedback
-        >
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="角色名称" hasFeedback>
           <!-- 编辑 -->
           <a-select v-decorator="['roleName', { initialValue: 'roleName' }]">
             <a-select-option v-for="item in OptionsList" :key="item.id" :value="item.id">{{
@@ -68,20 +78,34 @@
     <a-modal title="添加" style="top: 20px;" :width="800" v-model="AddUser" @ok="handleAddSub">
       <a-form class="permission-form" :form="form">
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="用户名" hasFeedback>
-          <a-input placeholder="请输入用户名" v-decorator="['username1',{rules:[{ required: true, message: '请输入用户名!' }]} ]" />
+          <a-input
+            placeholder="请输入用户名"
+            v-decorator="['username1', { rules: [{ required: true, message: '请输入用户名!' }] }]"
+          />
         </a-form-item>
 
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="密码" hasFeedback>
-          <a-input placeholder="请输入密码" v-decorator="['password1',{rules:[{ required: true, message: '请输入密码!' },{ required: true, min: 5, message: '最小长度5' },{ required: true, max: 11, message: '最大长度11' }]}]" />
+          <a-input
+            placeholder="请输入密码"
+            v-decorator="[
+              'password1',
+              {
+                rules: [
+                  { required: true, message: '请输入密码!' },
+                  { required: true, min: 5, message: '最小长度5' },
+                  { required: true, max: 11, message: '最大长度11' }
+                ]
+              }
+            ]"
+          />
         </a-form-item>
 
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="角色名称"
-          hasFeedback
-        >
-          <a-select v-decorator="['roleName1',{rules:[{ required: true, message: '请选择角色名称!' }]}]" placeholder="请选择角色名称" :defaultActiveFirstOption="false">
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="角色名称" hasFeedback>
+          <a-select
+            v-decorator="['roleName1', { rules: [{ required: true, message: '请选择角色名称!' }] }]"
+            placeholder="请选择角色名称"
+            :defaultActiveFirstOption="false"
+          >
             <a-select-option v-for="item in OptionsList" :key="item.id" :value="item.id">{{
               item.roleName
             }}</a-select-option>
@@ -89,7 +113,11 @@
         </a-form-item>
 
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态" hasFeedback>
-          <a-select v-decorator="['status1',{rules:[{ required: true, message: '请选择用户状态!' }]}]" placeholder="请选择用户状态" :defaultActiveFirstOption="false">
+          <a-select
+            v-decorator="['status1', { rules: [{ required: true, message: '请选择用户状态!' }] }]"
+            placeholder="请选择用户状态"
+            :defaultActiveFirstOption="false"
+          >
             <a-select-option :value="1">启用</a-select-option>
             <a-select-option :value="2">禁用</a-select-option>
           </a-select>
@@ -167,7 +195,7 @@ export default {
           return res
         })
       },
-      OptionsList: [],
+      OptionsList: []
     }
   },
   filters: {
@@ -183,7 +211,6 @@ export default {
   mounted() {
     //获取用户角色列表
     getOptionsList().then(res => {
-      console.log(res.data)
       this.OptionsList = res.data
     })
   },
@@ -191,8 +218,6 @@ export default {
   methods: {
     handleEdit(record) {
       this.visible = true
-      console.log('record', record)
-
       this.$nextTick(() => {
         this.form.setFieldsValue(pick(record, ['id', 'username', 'roleName', 'status']))
       })
@@ -203,8 +228,7 @@ export default {
       this.visible = false
       let data = {}
       this.form.validateFields((err, values) => {
-        console.log(err, values)
-        let { id, status, username, roleName,password } = values
+        let { id, status, username, roleName, password } = values
         data = {
           id,
           roleId: roleName,
@@ -213,19 +237,15 @@ export default {
           password
         }
       })
-      console.log(data)
-      updateUser( data ).then(res => {
-        console.log('编辑成功')
+      updateUser(data).then(res => {
         this.$message.success('更新成功')
         this.$refs.table.refresh(true)
       })
     },
 
     handleDel(record) {
-      console.log(record)
       let data = { ids: record.id }
       deleteUser(data).then(res => {
-        console.log('删除成功')
         this.$message.success('删除成功')
         this.$refs.table.refresh(true)
       })
@@ -244,7 +264,6 @@ export default {
       let data = {}
       //   var data1 = this.form.getFieldsValue();  获取表单的值
       this.form.validateFields((err, values) => {
-        console.log(err, values)
         let { status1, username1, roleName1, password1 } = values
         data = {
           roleId: roleName1,
@@ -253,9 +272,7 @@ export default {
           password: password1
         }
       })
-      console.log(data)
-      addUser( data ).then(res => {
-        console.log('添加成功')
+      addUser(data).then(res => {
         this.$message.success('添加成功')
         this.$refs.table.refresh(true)
       })

@@ -14,7 +14,6 @@ const request = axios.create({
 
 // 异常拦截处理器
 const errorHandler = (error) => {
-  console.log(error)
   if (error.response) {
     const data = error.response.data
     // 从 localstorage 获取 token
@@ -55,13 +54,11 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use((response) => {
-  // console.log(response)
   const res = response.data;
   if (res.code !== 200) {
 
     notification.error({
       message: res.message,
-      // description: 'Authorization verification failed'
     });
 
     // 401:Token 过期了;

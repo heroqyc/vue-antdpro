@@ -10,7 +10,7 @@
     :logo="logoRender"
     :i18nRender="i18nRender"
   >
-
+    
     <template v-slot:rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
     </template>

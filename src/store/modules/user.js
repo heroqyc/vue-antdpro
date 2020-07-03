@@ -1,6 +1,5 @@
 import storage from 'store'
-import { login, getUserRoutes, logout, getUserInfo } from '@/api/login'
-import axios from 'axios'
+import { login, getUserRoutes, getUserInfo } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 const user = {
@@ -31,15 +30,14 @@ const user = {
     Login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         // 登录
-        axios.post('http://192.168.1.118:9020/rest/admin/1.0/auth/signin', userInfo).then(response => {
-          const result = response.data.data
+        login(userInfo).then(response => {
+          const result = response.data
           storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
           commit('SET_TOKEN', result.token)
           resolve()
         }).catch(error => {
           reject(error)
-        });
-
+        })
       })
     },
 
@@ -49,7 +47,6 @@ const user = {
         getUserInfo().then(response => {
           const result = response.data;
           storage.set('username',result.username)
-
           commit('SET_PERMS', result.perms)
         })
       })
@@ -73,7 +70,7 @@ const user = {
     },
 
     // 登出
-    Logout({ commit, state }) {
+    Logout({ commit }) {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
         storage.remove(ACCESS_TOKEN)

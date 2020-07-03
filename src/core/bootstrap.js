@@ -24,5 +24,4 @@ export default function Initializer () {
   store.commit('SET_TOKEN', storage.get(ACCESS_TOKEN))
 
   store.dispatch('setLang', storage.get(APP_LANGUAGE, 'en-US'))
-  // last step
 }

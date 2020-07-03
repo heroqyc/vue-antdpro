@@ -6,7 +6,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/'
-import i18n from './locales'
+// import i18n from './locales'
 import { VueAxios } from './utils/request'
 import ProLayout, { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 import themePluginConfig from '../config/themePluginConfig'
@@ -14,15 +14,14 @@ import 'ant-design-vue/dist/antd.css';
 import { TreeSelect } from 'ant-design-vue';
 Vue.use(TreeSelect);
 
-// mock
-// WARNING: `mockjs` NOT SUPPORT `IE` PLEASE DO NOT USE IN `production` ENV.
+// mock数据
 // import './mock'
 
 import './core/directives/dialogDrag'
 import bootstrap from './core/bootstrap'
 import './core/lazy_use'
-import './permission' // permission control
-import './utils/filter' // global filter
+import './permission'
+import './utils/filter'
 import './global.less'
 
 Vue.config.productionTip = false
@@ -37,7 +36,7 @@ window.umi_plugin_ant_themeVar = themePluginConfig.theme
 new Vue({
   router,
   store,
-  i18n,
+  // i18n,
   created: bootstrap,
   render: h => h(App)
 }).$mount('#app')

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 const userApi = {
-  Logout: '/auth/logout',
+  Login:'/rest/admin/1.0/auth/signin',
   ForgePassword: '/auth/forge-password',
   Register: '/auth/register',
   twoStepCode: '/auth/2step-code',
@@ -43,24 +43,11 @@ export function getCurrentUserNav () {
   })
 }
 
-export function logout () {
+export function login (parameter) {
   return request({
-    url: userApi.Logout,
+    url: userApi.Login,
     method: 'post',
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    }
+    data: parameter
   })
 }
 
-/**
- * get user 2step code open?
- * @param parameter {*}
- */
-// export function get2step (parameter) {
-//   return request({
-//     url: userApi.twoStepCode,
-//     method: 'post',
-//     data: parameter
-//   })
-// }

@@ -243,7 +243,6 @@ export default {
         sm: { span: 16 }
       },
       visible: false,
-      treeValue: '',
       treeData: [],
       AddPerm: false,
       data1: [],
@@ -258,11 +257,6 @@ export default {
       loading: false
     }
   },
-  watch: {
-    treeValue(value) {
-      console.log(value)
-    }
-  },
   filters: {
     statusFilter(key) {
       return STATUS[key]
@@ -272,12 +266,10 @@ export default {
     this.loading = true
     getPermList().then(res => {
       this.loading = false
-      // console.log(res.data)
       this.data1 = res.data
     })
     getPermOptionsList().then(res => {
       let data = res.data
-      console.log(data, '权限菜单列表')
       this.treeData = res.data
     })
   },
@@ -288,7 +280,6 @@ export default {
       btnstate === true ? (this.btnInputState = false) : (this.btnInputState = true)
       let pageArr = ['id', 'permName','component', 'icon', 'permExp', 'uri', 'type']
       let btnArr = ['id', 'permName', 'permExp', 'uri', 'type']
-      console.log(pick(record, btnArr))
       this.$nextTick(() => {
         this.form.resetFields()
         btnstate == true
@@ -314,9 +305,7 @@ export default {
           pid
         }
       })
-      console.log(data, '更新权限')
       updatePerm(data).then(res => {
-        console.log('更新成功')
         this.$message.success('更新成功')
         location.reload()
       })
@@ -346,18 +335,14 @@ export default {
           pid
         }
       })
-      console.log(data, '添加权限')
       addPerm(data).then(res => {
-        console.log('添加成功')
         this.$message.success('添加成功')
         location.reload()
       })
     },
 
     handleDel(record) {
-      console.log(record)
       deletePerm(record.id).then(res => {
-        console.log('删除成功')
         this.$message.success('删除成功')
         location.reload()
       })
